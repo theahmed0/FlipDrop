@@ -1,12 +1,18 @@
-body {
+* {
+    box-sizing: border-box;
     margin: 0;
+    padding: 0;
+}
+
+body {
     font-family: system-ui, -apple-system, sans-serif;
-    background: #0d0f12;
-    color: #fff;
+    background: #000000;
+    color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    padding: 20px;
 }
 
 #bg-video {
@@ -29,25 +35,137 @@ body {
 }
 
 .transfer-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px);
+    background: rgba(18, 18, 20, 0.85);
+    backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 24px;
-    width: 90%;
+    border-radius: 20px;
+    padding: 28px;
+    width: 100%;
     max-width: 480px;
     text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
 }
 
-.hidden { display: none !important; }
-.pulse-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+}
+
+.pulse-dot { width: 8px; height: 8px; border-radius: 50%; }
 .pulse-dot.red { background: #ff4757; }
 .pulse-dot.green { background: #2ed573; }
 
-.drop-zone {
-    border: 2px dashed rgba(255,255,255,0.2);
-    padding: 30px;
-    border-radius: 12px;
-    margin-top: 15px;
+.room-info h3 { font-size: 0.9rem; color: #a1a1aa; }
+
+.code-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 10px 0 20px 0;
+}
+
+.code-display h1 { font-size: 2.2rem; letter-spacing: 4px; font-weight: 800; }
+
+.btn-copy {
+    background: #27272a;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
     cursor: pointer;
+}
+
+.qr-container {
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.privacy-note { font-size: 0.75rem; color: #71717a; }
+
+.hidden { display: none !important; }
+
+/* منطقة سحب ورفع الملفات - مغطاة بالكامل للهواتف */
+.drop-zone {
+    position: relative;
+    border: 2px dashed #3f3f46;
+    border-radius: 16px;
+    padding: 30px 20px;
+    margin-top: 15px;
+    background: rgba(255, 255, 255, 0.02);
+    overflow: hidden;
+}
+
+.drop-zone:hover, .drop-zone.dragover {
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.upload-icon { font-size: 2rem; margin-bottom: 8px; }
+.file-limits { font-size: 0.75rem; color: #71717a; margin-top: 6px; }
+
+.btn-select-file {
+    margin-top: 15px;
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    pointer-events: none;
+}
+
+/* العنصر الجوهري للتفاعل المباشر في هواتف Android/iOS */
+.file-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.quick-text-box {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.quick-text-box input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #27272a;
+    background: #121214;
+    color: #fff;
+}
+
+.quick-text-box button {
+    background: #ffffff;
+    color: #000;
+    border: none;
+    padding: 0 16px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.progress-box { margin-top: 15px; }
+progress { width: 100%; height: 8px; border-radius: 4px; }
+.btn-cancel {
+    margin-top: 8px;
+    background: transparent;
+    border: 1px solid #ff4757;
+    color: #ff4757;
+    padding: 6px 12px;
+    border-radius: 6px;
 }
