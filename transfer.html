@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlipDrop ⚡ - Transfer Room</title>
-    <link rel="stylesheet" href="transfer.css">
-    <!-- مكتبة PeerJS و QRCode عبر CDN -->
+    <link rel="stylesheet" href="css/transfer.css">
+    <!-- مكتبات PeerJS و QRCode عبر CDN -->
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
     <video autoplay muted loop playsinline id="bg-video">
-        <source src="background.mp4" type="video/mp4">
+        <source src="./assets/background.mp4" type="video/mp4">
     </video>
     <div class="video-overlay"></div>
 
@@ -27,13 +27,13 @@
             <h3>رمز الغرفة الخاص:</h3>
             <div class="code-display">
                 <h1 id="room-code-display">------</h1>
-                <button onclick="copyRoomCode()">📋 نسخ الرمز</button>
+                <button class="btn-copy" onclick="copyRoomCode()">📋 نسخ الرمز</button>
             </div>
             <div id="qrcode" class="qr-container"></div>
-            <p class="privacy-note">🔒 تغلق هذه الغرفة ويُدمر الاتصال فور إغلاق هذه الصفحة.</p>
+            <p class="privacy-note">🔒 تغلق هذه الغرفة ويُدمر الاتصال فور إغلاق الصفحة.</p>
         </div>
 
-        <!-- منطقة النقل (تظهر بعد الاتصال) -->
+        <!-- منطقة العمل (تظهر بعد الاتصال) -->
         <div class="transfer-workspace hidden" id="workspace">
             <!-- نقل النصوص السريعة -->
             <div class="quick-text-box">
@@ -43,11 +43,16 @@
             
             <div id="text-received-container"></div>
 
-            <!-- منطقة رفع وتفريغ الملفات -->
+            <!-- منطقة رفع وتفريغ الملفات المحسنة للهاتف -->
             <div class="drop-zone" id="drop-zone">
-                <p>اسحب وأفلت الملف هنا أو <span onclick="document.getElementById('file-input').click()">تصفح</span></p>
-                <small>الحد الأقصى لحجم الملف: 100 ميجابايت</small>
-                <input type="file" id="file-input" hidden>
+                <div class="drop-zone-content">
+                    <div class="upload-icon">📁</div>
+                    <h3>اضغط هنا لاختيار ملف أو اسحبه إلى هنا</h3>
+                    <p class="file-limits">يدعم الصور، الفيديوهات والمستندات (حتى 100MB)</p>
+                    <button class="btn-select-file" type="button">اختيار ملف من الجهاز</button>
+                </div>
+                <!-- وسم الرفع المغطي بالكامل للهواتف -->
+                <input type="file" id="file-input" class="file-input">
             </div>
 
             <!-- شريط التقدم وزر الإلغاء -->
@@ -60,6 +65,6 @@
         </div>
     </div>
 
-    <script src="transfer.js"></script>
+    <script src="js/transfer.js"></script>
 </body>
 </html>
