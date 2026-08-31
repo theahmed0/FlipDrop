@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlipDrop ⚡ - Fast & Private File Transfer</title>
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+    <!-- خلفية الفيديو والطبقة المظلمة -->
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="./assets/background.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay" id="video-overlay"></div>
+
+    <!-- 1. الجزء الأعلى (Hero Section) -->
+    <header class="hero-section">
+        <div class="hero-content">
+            <h1 class="logo-title">FlipDrop ⚡</h1>
+            <p class="hero-subtitle">انقل ملفاتك بين أي جهازين فوراً. بدون حسابات. بدون كابلات.</p>
+            <div class="scroll-indicator">
+                <span>مرر للأسفل للبدء</span>
+                <div class="arrow-down">↓</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. قسم إنشاء أو الانضمام للغرفة (يظهر عند التمرير) -->
+    <main class="action-section" id="action-section">
+        <div class="action-card">
+            <h2>ابدأ جلسة النقل 🚀</h2>
+            <p class="card-desc">اختر إنشاء غرفة جديدة أو أدخل الرمز للانضمام لغرفة قائمة.</p>
+
+            <div class="actions">
+                <button class="btn btn-primary" onclick="startNewTransfer()">⚡ إنشاء غرفة نقل جديدة</button>
+                
+                <div class="divider"><span>أو</span></div>
+
+                <div class="join-box">
+                    <input type="text" id="join-code-input" placeholder="أدخل رمز الغرفة (مثال: 7K9X2P)" maxlength="6">
+                    <button class="btn btn-secondary" onclick="joinRoomByCode()">انضمام للغرفة</button>
+                </div>
+            </div>
+
+            <footer class="features-footer">
+                <span>🔒 Private by Design</span>
+                <span>⚡ 100MB Max</span>
+                <span>📱 ↔ 💻 P2P Direct</span>
+            </footer>
+        </div>
+    </main>
+
+    <script src="js/home.js"></script>
+</body>
+</html>

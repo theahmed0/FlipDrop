@@ -1,0 +1,191 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: #000000; /* الخلفية الأساسية سوداء */
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* الفيديو والطبقة التعتيمية */
+#bg-video {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -3;
+    opacity: 0.35;
+    filter: grayscale(0.3) contrast(1.1) brightness(0.45);
+    transition: opacity 0.5s ease;
+}
+
+.video-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.9));
+    pointer-events: none;
+    transition: background 0.5s ease;
+}
+
+/* حالة الاختفاء عند التمرير للأسفل (تضاف عبر JS) */
+body.scrolled #bg-video {
+    opacity: 0; /* إخفاء الفيديو بالكامل عند التمرير */
+}
+
+body.scrolled .video-overlay {
+    background: #000000; /* تحويل الخلفية لأسود كامل */
+}
+
+/* 1. Hero Section */
+.hero-section {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.logo-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -1px;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: #a1a1aa;
+    max-width: 500px;
+    margin: 0 auto 40px auto;
+}
+
+.scroll-indicator {
+    color: #71717a;
+    font-size: 0.9rem;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+/* 2. Action Section (اللوحة السوداء عند التمرير) */
+.action-section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.action-card {
+    background: #0a0a0a;
+    border: 1px solid #222222;
+    border-radius: 20px;
+    padding: 36px;
+    width: 100%;
+    max-width: 440px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+}
+
+.action-card h2 {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+}
+
+.card-desc {
+    color: #888888;
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+}
+
+.btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: #ffffff;
+    color: #000000;
+}
+
+.btn-primary:hover {
+    background: #e4e4e7;
+}
+
+.btn-secondary {
+    background: #27272a;
+    color: #ffffff;
+    margin-top: 10px;
+}
+
+.btn-secondary:hover {
+    background: #3f3f46;
+}
+
+.divider {
+    margin: 20px 0;
+    position: relative;
+    text-align: center;
+}
+
+.divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #222222;
+}
+
+.divider span {
+    position: relative;
+    background: #0a0a0a;
+    padding: 0 12px;
+    color: #666666;
+    font-size: 0.85rem;
+}
+
+.join-box input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #27272a;
+    background: #121214;
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    outline: none;
+}
+
+.join-box input:focus {
+    border-color: #52525b;
+}
+
+.features-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #18181b;
+    font-size: 0.75rem;
+    color: #52525b;
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlipDrop ⚡ - Transfer Room</title>
+    <link rel="stylesheet" href="css/transfer.css">
+    <!-- مكتبة PeerJS و QRCode عبر CDN -->
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="./assets/background.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
+
+    <div class="transfer-card">
+        <!-- حالة الاتصال -->
+        <div class="status-badge" id="status-badge">
+            <span class="pulse-dot red"></span>
+            <span id="status-text">في انتظار اتصال الجهاز الثاني...</span>
+        </div>
+
+        <!-- معلومات الغرفة المستقلة -->
+        <div class="room-info" id="room-info-box">
+            <h3>رمز الغرفة الخاص:</h3>
+            <div class="code-display">
+                <h1 id="room-code-display">------</h1>
+                <button onclick="copyRoomCode()">📋 نسخ الرمز</button>
+            </div>
+            <div id="qrcode" class="qr-container"></div>
+            <p class="privacy-note">🔒 تغلق هذه الغرفة ويُدمر الاتصال فور إغلاق هذه الصفحة.</p>
+        </div>
+
+        <!-- منطقة النقل (تظهر بعد الاتصال) -->
+        <div class="transfer-workspace hidden" id="workspace">
+            <!-- نقل النصوص السريعة -->
+            <div class="quick-text-box">
+                <input type="text" id="quick-text-input" placeholder="اكتب نصاً أو رابطاً لنقله فوراً...">
+                <button onclick="sendQuickText()">إرسال النص</button>
+            </div>
+            
+            <div id="text-received-container"></div>
+
+            <!-- منطقة رفع وتفريغ الملفات -->
+            <div class="drop-zone" id="drop-zone">
+                <p>اسحب وأفلت الملف هنا أو <span onclick="document.getElementById('file-input').click()">تصفح</span></p>
+                <small>الحد الأقصى لحجم الملف: 100 ميجابايت</small>
+                <input type="file" id="file-input" hidden>
+            </div>
+
+            <!-- شريط التقدم وزر الإلغاء -->
+            <div class="progress-box hidden" id="progress-box">
+                <span id="progress-filename">File.zip</span>
+                <progress id="progress-bar" value="0" max="100"></progress>
+                <span id="progress-percent">0%</span>
+                <button class="btn-cancel" onclick="cancelTransfer()">إلغاء النقل</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/transfer.js"></script>
+</body>
+</html>
