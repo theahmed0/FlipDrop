@@ -1,24 +1,22 @@
 // ==========================================
-// FlipDrop Core Engine - Live P2P Transfer
-// Isolated Rooms | 100MB Max | Chunking | WakeLock
+// FlipDrop Core Engine - Mobile Ready P2P
+// 100MB Limit | 32KB Chunking | Safari/Android Fix
 // ==========================================
 
 const MAX_FILE_SIZE_MB = 100;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
-const CHUNK_SIZE = 32 * 1024; // 32KB Chunking
+const CHUNK_SIZE = 32 * 1024;
 
 let peer = null;
 let conn = null;
 let wakeLock = null;
 let currentRoomCode = '';
 
-// Transfer States
 let incomingBuffer = [];
 let receivedSize = 0;
 let fileMetadata = null;
 let isTransferring = false;
 
-// Web Audio API
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 function playBeep(freq = 600, duration = 0.1) {
     if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -32,7 +30,6 @@ function playBeep(freq = 600, duration = 0.1) {
     osc.stop(audioCtx.currentTime + duration);
 }
 
-// 1. Init Room Handling
 window.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const action = urlParams.get('action');
@@ -44,10 +41,9 @@ window.addEventListener('DOMContentLoaded', () => {
         createNewIsolatedRoom();
     }
 
-    setupDragAndDrop();
+    setupFileInputHandlers();
 });
 
-// Generate Unique Code
 function generateCode() {
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
     let res = '';
@@ -55,12 +51,10 @@ function generateCode() {
     return res;
 }
 
-// Create Room
 function createNewIsolatedRoom() {
     currentRoomCode = generateCode();
     document.getElementById('room-code-display').innerText = currentRoomCode;
     
-    // QR Code Generation
     const joinUrl = `${window.location.origin}${window.location.pathname}?action=join&code=${currentRoomCode}`;
     new QRCode(document.getElementById('qrcode'), { text: joinUrl, width: 128, height: 128 });
 
@@ -70,23 +64,19 @@ function createNewIsolatedRoom() {
         conn = connection;
         setupConnection();
     });
-
-    peer.on('error', (err) => console.error(err));
 }
 
-// Join Room
 function joinExistingRoom(code) {
     currentRoomCode = code;
     document.getElementById('room-info-box').style.display = 'none';
     
-    peer = new Peer(); // Guest Peer
+    peer = new Peer();
     peer.on('open', () => {
         conn = peer.connect('flipdrop-' + currentRoomCode);
         setupConnection();
     });
 }
 
-// Setup Active Connection
 function setupConnection() {
     requestWakeLock();
     playBeep(800, 0.15);
@@ -116,10 +106,9 @@ function updateStatus(connected) {
     }
 }
 
-// Handle Data Stream
 function handleData(data) {
     if (data.type === 'HOST_DISCONNECTED') {
-        alert('أغلق المستضيف الصفحَة، انتهت الجلسة.');
+        alert('أغلق المستضيف الصفحة، انتهت الجلسة.');
         window.location.href = 'index.html';
         return;
     }
@@ -160,9 +149,13 @@ function handleData(data) {
     }
 }
 
-// Send File
 function sendFile(file) {
-    if (!conn || file.size > MAX_FILE_SIZE_BYTES) {
+    if (!conn) {
+        alert('لا يوجد اتصال نشط بالأجهزة الأخرى!');
+        return;
+    }
+
+    if (file.size > MAX_FILE_SIZE_BYTES) {
         alert(`حجم الملف يتجاوز الحد الأقصى ${MAX_FILE_SIZE_MB}MB!`);
         return;
     }
@@ -198,6 +191,34 @@ function sendFile(file) {
     readNext();
 }
 
+function setupFileInputHandlers() {
+    const fileInput = document.getElementById('file-input');
+    const dropZone = document.getElementById('drop-zone');
+
+    // دعم النقر المباشر للهواتف الذكية (Android & iOS)
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+            sendFile(e.target.files[0]);
+        }
+    });
+
+    // دعم السحب والإفلات للكمبيوتر
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            sendFile(e.dataTransfer.files[0]);
+        }
+    });
+}
+
 function sendQuickText() {
     const input = document.getElementById('quick-text-input');
     if (input.value.trim() && conn) {
@@ -212,21 +233,6 @@ function downloadFile() {
     a.href = URL.createObjectURL(blob);
     a.download = fileMetadata.name;
     a.click();
-}
-
-function setupDragAndDrop() {
-    const dropZone = document.getElementById('drop-zone');
-    const fileInput = document.getElementById('file-input');
-
-    fileInput.addEventListener('change', (e) => {
-        if (e.target.files[0]) sendFile(e.target.files[0]);
-    });
-
-    dropZone.addEventListener('dragover', (e) => e.preventDefault());
-    dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        if (e.dataTransfer.files[0]) sendFile(e.dataTransfer.files[0]);
-    });
 }
 
 function showProgress(show, name = '') {
@@ -265,6 +271,11 @@ async function requestWakeLock() {
     } catch (err) {}
 }
 
+function cleanupSession() {
+    if (wakeLock) wakeLock.release();
+    if (conn) conn.close();
+    if (peer) peer.destroy();
+}
 function cleanupSession() {
     if (wakeLock) wakeLock.release();
     if (conn) conn.close();
