@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlipDrop ⚡ - Room</title>
     <link rel="stylesheet" href="home.css">
-    <!-- مكتبة PeerJS للاتصال المباشر بين الأجهزة P2P -->
+    <!-- مكتبة PeerJS للاتصال المباشر P2P -->
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
 </head>
 <body>
 
-    <!-- الشريط العلوي المستقل لزر اللغة وزر العودة -->
+    <!-- الشريط العلوي المستقل -->
     <header class="top-nav">
         <a href="index.html" class="nav-badge back-btn" id="back-btn">
             ← <span id="back-text">الرئيسية</span>
@@ -21,19 +21,18 @@
         </button>
     </header>
 
-    <!-- خلفية الفيديو المظلمة -->
+    <!-- خلفية الفيديو -->
     <video autoplay muted loop playsinline id="bg-video">
         <source src="background.mp4" type="video/mp4">
     </video>
     <div class="video-overlay" id="video-overlay"></div>
 
-    <!-- بطاقة إدارة الغرفة والمستندات -->
+    <!-- بطاقة إدارة الغرفة -->
     <main class="action-section">
         <div class="action-card transfer-card">
             
             <h2 id="room-title">غرفة النقل المباشر ⚡</h2>
             
-            <!-- صندوق عرض رمز الغرفة ومشاركتها -->
             <div class="room-code-wrapper">
                 <span id="label-room-code">رمز الغرفة:</span>
                 <div class="code-box">
@@ -42,20 +41,20 @@
                 </div>
             </div>
 
-            <!-- حالة الاتصال بالحساب الآخر -->
+            <!-- حالة الاتصال -->
             <div class="status-box" id="status-box">
                 <span class="status-dot" id="status-dot"></span>
-                <span id="status-text">جاري إنشاء الغرفة...</span>
+                <span id="status-text">جاري الاتصال...</span>
             </div>
 
-            <!-- منطقة رفع وسحب الملفات -->
+            <!-- منطقة رفع الملفات -->
             <div class="drop-zone" id="drop-zone">
                 <p id="drop-text">اسحب وأسقط الملفات هنا أو</p>
                 <label for="file-input" class="btn btn-primary" id="btn-select-file">اختر ملفاً للنقل</label>
                 <input type="file" id="file-input" hidden>
             </div>
 
-            <!-- قائمة الملفات والمستندات المستلمة والمرسلة -->
+            <!-- قائمة الملفات -->
             <div class="file-list-container">
                 <h3 id="transfers-title">الملفات المنقولة:</h3>
                 <div class="file-list" id="file-list">
