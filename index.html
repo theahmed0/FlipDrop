@@ -7,19 +7,17 @@
     <link rel="stylesheet" href="home.css">
 </head>
 <body>
-    <!-- الشريط العلوي المستقل لعداد الزوار وزر اللغة -->
-    <div class="top-bar">
-        <div class="visitor-box">
-            <span>👁️ الزوار: </span>
-            <strong id="visitor-count">...</strong>
+    <!-- الشريط العلوي لشريط الزوار وزر تغيير اللغة -->
+    <header class="top-nav">
+        <div class="nav-badge visitor-badge">
+            <span id="visitor-label">👁️ الزوار:</span>
+            <strong id="visitor-count">1</strong>
         </div>
-        
-        <div class="lang-switch-container">
-            <button id="lang-btn" class="lang-btn" onclick="toggleLanguage()">
-                🌐 <span id="lang-text">English</span>
-            </button>
-        </div>
-    </div>
+
+        <button type="button" class="nav-badge lang-badge" id="lang-btn" onclick="toggleLanguage()">
+            🌐 <span id="lang-text">English</span>
+        </button>
+    </header>
 
     <!-- خلفية الفيديو والطبقة المظلمة -->
     <video autoplay muted loop playsinline id="bg-video">
@@ -28,31 +26,32 @@
     <div class="video-overlay" id="video-overlay"></div>
 
     <!-- 1. الجزء الأعلى (Hero Section) -->
-    <header class="hero-section">
+    <section class="hero-section">
         <div class="hero-content">
             <h1 class="logo-title">FlipDrop ⚡</h1>
-            <p class="hero-subtitle">انقل ملفاتك بين أي جهازين فوراً. بدون حسابات. بدون كابلات.</p>
+            <p class="hero-subtitle" id="hero-subtitle">انقل ملفاتك بين أي جهازين فوراً. بدون حسابات. بدون كابلات.</p>
+
             <div class="scroll-indicator">
-                <span>مرر للأسفل للبدء</span>
+                <span id="scroll-text">مرر للأسفل للبدء</span>
                 <div class="arrow-down">↓</div>
             </div>
         </div>
-    </header>
+    </section>
 
     <!-- 2. قسم إنشاء أو الانضمام للغرفة -->
     <main class="action-section" id="action-section">
         <div class="action-card">
-            <h2>ابدأ جلسة النقل 🚀</h2>
-            <p class="card-desc">اختر إنشاء غرفة جديدة أو أدخل الرمز للانضمام لغرفة قائمة.</p>
+            <h2 id="card-title">ابدأ جلسة النقل 🚀</h2>
+            <p class="card-desc" id="card-desc">اختر إنشاء غرفة جديدة أو أدخل الرمز للانضمام لغرفة قائمة.</p>
 
             <div class="actions">
-                <button class="btn btn-primary" onclick="startNewTransfer()">⚡ إنشاء غرفة نقل جديدة</button>
+                <button class="btn btn-primary" id="btn-create" onclick="startNewTransfer()">⚡ إنشاء غرفة نقل جديدة</button>
                 
-                <div class="divider"><span>أو</span></div>
+                <div class="divider"><span id="or-text">أو</span></div>
 
                 <div class="join-box">
                     <input type="text" id="join-code-input" placeholder="أدخل رمز الغرفة (مثال: 7K9X2P)" maxlength="6">
-                    <button class="btn btn-secondary" onclick="joinRoomByCode()">انضمام للغرفة</button>
+                    <button class="btn btn-secondary" id="btn-join" onclick="joinRoomByCode()">انضمام للغرفة</button>
                 </div>
             </div>
 
