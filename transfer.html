@@ -4,67 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlipDrop ⚡ - Transfer Room</title>
-    <link rel="stylesheet" href="transfer.css">
-    <!-- مكتبات PeerJS و QRCode عبر CDN -->
-    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="home.css">
+    <!-- إذا كان لديك ملف CSS خاص بالغرفة أضفه هنا -->
 </head>
 <body>
-    <video autoplay muted loop playsinline id="bg-video">
-        <source src="background.mp4" type="video/mp4">
-    </video>
-    <div class="video-overlay"></div>
 
-    <div class="transfer-card">
-        <!-- حالة الاتصال -->
-        <div class="status-badge" id="status-badge">
-            <span class="pulse-dot red"></span>
-            <span id="status-text">في انتظار اتصال الجهاز الثاني...</span>
-        </div>
+    <!-- الشريط العلوي المستقل لزر اللغة -->
+    <header class="top-nav">
+        <button type="button" class="nav-badge lang-badge" id="lang-btn">
+            🌐 <span id="lang-text">English</span>
+        </button>
+    </header>
 
-        <!-- معلومات الغرفة المستقلة -->
-        <div class="room-info" id="room-info-box">
-            <h3>رمز الغرفة الخاص:</h3>
-            <div class="code-display">
-                <h1 id="room-code-display">------</h1>
-                <button class="btn-copy" onclick="copyRoomCode()">📋 نسخ الرمز</button>
-            </div>
-            <div id="qrcode" class="qr-container"></div>
-            <p class="privacy-note">🔒 تغلق هذه الغرفة ويُدمر الاتصال فور إغلاق الصفحة.</p>
-        </div>
-
-        <!-- منطقة العمل (تظهر بعد الاتصال) -->
-        <div class="transfer-workspace hidden" id="workspace">
-            <!-- نقل النصوص السريعة -->
-            <div class="quick-text-box">
-                <input type="text" id="quick-text-input" placeholder="اكتب نصاً أو رابطاً لنقله فوراً...">
-                <button onclick="sendQuickText()">إرسال النص</button>
-            </div>
+    <div class="action-section">
+        <div class="action-card transfer-card">
             
-            <div id="text-received-container"></div>
+            <h2 id="room-title">غرفة النقل المباشر ⚡</h2>
+            
+            <div class="room-code-box">
+                <span id="label-room-code">رمز الغرفة:</span>
+                <strong id="display-room-code">------</strong>
+            </div>
 
-            <!-- منطقة رفع وتفريغ الملفات المحسنة للهاتف -->
+            <!-- حالة الاتصال -->
+            <div class="status-box">
+                <span class="status-dot" id="status-dot"></span>
+                <span id="status-text">جاري الاتصال بالسيرفر...</span>
+            </div>
+
+            <!-- منطقة رفع وتنزيل الملفات -->
             <div class="drop-zone" id="drop-zone">
-                <div class="drop-zone-content">
-                    <div class="upload-icon">📁</div>
-                    <h3>اضغط هنا لاختيار ملف أو اسحبه إلى هنا</h3>
-                    <p class="file-limits">يدعم الصور، الفيديوهات والمستندات (حتى 100MB)</p>
-                    <button class="btn-select-file" type="button">اختيار ملف من الجهاز</button>
-                </div>
-                <!-- وسم الرفع المغطي بالكامل للهواتف -->
-                <input type="file" id="file-input" class="file-input">
+                <p id="drop-text">اسحب وأسقط الملفات هنا أو</p>
+                <label for="file-input" class="btn btn-primary" id="btn-select-file">اختر ملفاً للنقل</label>
+                <input type="file" id="file-input" hidden>
             </div>
 
-            <!-- شريط التقدم وزر الإلغاء -->
-            <div class="progress-box hidden" id="progress-box">
-                <span id="progress-filename">File.zip</span>
-                <progress id="progress-bar" value="0" max="100"></progress>
-                <span id="progress-percent">0%</span>
-                <button class="btn-cancel" onclick="cancelTransfer()">إلغاء النقل</button>
-            </div>
+            <!-- قائمة الملفات المعلقة / المرسلة -->
+            <div class="file-list" id="file-list"></div>
+
+            <footer class="features-footer">
+                <span>🔒 Encrypted P2P</span>
+                <span>⚡ Direct Stream</span>
+            </footer>
+
         </div>
     </div>
 
+    <!-- ملف السكريبت الخاص بالغرفة -->
     <script src="transfer.js"></script>
 </body>
 </html>
