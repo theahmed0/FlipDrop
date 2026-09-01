@@ -1,26 +1,5 @@
 // ==========================================
-// 1. نظام حساب الزوار الفريدين
-// ==========================================
-function trackUniqueVisitor() {
-    const counterElement = document.getElementById('visitor-count');
-    const storageKey = 'flipdrop_unique_visit';
-    const totalKey = 'flipdrop_visitors_total';
-
-    let totalVisits = parseInt(localStorage.getItem(totalKey) || '1');
-
-    if (!localStorage.getItem(storageKey)) {
-        totalVisits += 1;
-        localStorage.setItem(storageKey, 'true');
-        localStorage.setItem(totalKey, totalVisits.toString());
-    }
-
-    if (counterElement) {
-        counterElement.innerText = totalVisits.toLocaleString();
-    }
-}
-
-// ==========================================
-// 2. نظام التبديل الفوري بين اللغة العربية والإنجليزية
+// 1. نظام الترجمة (AR / EN)
 // ==========================================
 const translations = {
     ar: {
@@ -56,14 +35,15 @@ let currentLang = localStorage.getItem('flipdrop_lang') || 'ar';
 function applyLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('flipdrop_lang', lang);
-    document.documentElement.dir = translations[lang].dir;
-    document.documentElement.lang = lang;
+    
+    document.documentElement.setAttribute('dir', translations[lang].dir);
+    document.documentElement.setAttribute('lang', lang);
 
     const t = translations[lang];
 
     const setElemText = (id, text) => {
         const el = document.getElementById(id);
-        if (el) el.innerText = text;
+        if (el) el.textContent = text;
     };
 
     setElemText('hero-subtitle', t.logoSub);
@@ -80,9 +60,25 @@ function applyLanguage(lang) {
     if (input) input.placeholder = t.inputPlaceholder;
 }
 
-function toggleLanguage() {
-    const nextLang = currentLang === 'ar' ? 'en' : 'ar';
-    applyLanguage(nextLang);
+// ==========================================
+// 2. نظام حساب الزوار
+// ==========================================
+function trackUniqueVisitor() {
+    const counterElement = document.getElementById('visitor-count');
+    const storageKey = 'flipdrop_unique_visit';
+    const totalKey = 'flipdrop_visitors_total';
+
+    let totalVisits = parseInt(localStorage.getItem(totalKey) || '1');
+
+    if (!localStorage.getItem(storageKey)) {
+        totalVisits += 1;
+        localStorage.setItem(storageKey, 'true');
+        localStorage.setItem(totalKey, totalVisits.toString());
+    }
+
+    if (counterElement) {
+        counterElement.textContent = totalVisits.toLocaleString();
+    }
 }
 
 // ==========================================
@@ -112,7 +108,20 @@ function joinRoomByCode() {
     window.location.href = `transfer.html?action=join&code=${code}`;
 }
 
+// ==========================================
+// 4. ربط الأحداث عند تحميل الصفحة
+// ==========================================
 document.addEventListener('DOMContentLoaded', () => {
     applyLanguage(currentLang);
     trackUniqueVisitor();
+
+    // ربط الزر مباشرة بحدث الضغط
+    const langBtn = document.getElementById('lang-btn');
+    if (langBtn) {
+        langBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const nextLang = currentLang === 'ar' ? 'en' : 'ar';
+            applyLanguage(nextLang);
+        });
+    }
 });
