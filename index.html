@@ -7,10 +7,20 @@
     <link rel="stylesheet" href="home.css">
 </head>
 <body>
-    <div class="visitor-box">
-    <span>👁️ عدد زوار الموقع: </span>
-    <strong id="visitor-count">جاري التحميل...</strong>
-</div>
+    <!-- الشريط العلوي المستقل لعداد الزوار وزر اللغة -->
+    <div class="top-bar">
+        <div class="visitor-box">
+            <span>👁️ الزوار: </span>
+            <strong id="visitor-count">...</strong>
+        </div>
+        
+        <div class="lang-switch-container">
+            <button id="lang-btn" class="lang-btn" onclick="toggleLanguage()">
+                🌐 <span id="lang-text">English</span>
+            </button>
+        </div>
+    </div>
+
     <!-- خلفية الفيديو والطبقة المظلمة -->
     <video autoplay muted loop playsinline id="bg-video">
         <source src="background.mp4" type="video/mp4">
@@ -29,7 +39,7 @@
         </div>
     </header>
 
-    <!-- 2. قسم إنشاء أو الانضمام للغرفة (يظهر عند التمرير) -->
+    <!-- 2. قسم إنشاء أو الانضمام للغرفة -->
     <main class="action-section" id="action-section">
         <div class="action-card">
             <h2>ابدأ جلسة النقل 🚀</h2>
