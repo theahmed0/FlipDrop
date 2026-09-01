@@ -1,171 +1,150 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: system-ui, -apple-system, sans-serif;
-    background: #000000;
-    color: #ffffff;
+/* تنسيقات صفحة الغرفة transfer.html */
+.room-code-wrapper {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 12px 16px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-}
-
-#bg-video {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -3;
-    opacity: 0.35;
-    filter: grayscale(0.3) contrast(1.1) brightness(0.45);
-}
-
-.video-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.72), rgba(0,0,0,0.9));
-    pointer-events: none;
-}
-
-.transfer-card {
-    background: rgba(18, 18, 20, 0.85);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 28px;
-    width: 100%;
-    max-width: 480px;
-    text-align: center;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
-}
-
-.status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.85rem;
     margin-bottom: 20px;
 }
 
-.pulse-dot { width: 8px; height: 8px; border-radius: 50%; }
-.pulse-dot.red { background: #ff4757; }
-.pulse-dot.green { background: #2ed573; }
-
-.room-info h3 { font-size: 0.9rem; color: #a1a1aa; }
-
-.code-display {
+.code-box {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 15px;
-    margin: 10px 0 20px 0;
+    gap: 10px;
 }
 
-.code-display h1 { font-size: 2.2rem; letter-spacing: 4px; font-weight: 800; }
+.code-box strong {
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    color: #ffffff;
+}
 
-.btn-copy {
+.copy-btn {
     background: #27272a;
-    color: #fff;
     border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
     cursor: pointer;
+    transition: background 0.2s;
 }
 
-.qr-container {
-    background: #ffffff;
-    padding: 12px;
-    border-radius: 12px;
-    display: inline-block;
-    margin-bottom: 15px;
+.copy-btn:hover {
+    background: #3f3f46;
 }
 
-.privacy-note { font-size: 0.75rem; color: #71717a; }
+.status-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #a1a1aa;
+    margin-bottom: 24px;
+}
 
-.hidden { display: none !important; }
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #eab308; /* انتظار */
+}
 
-/* منطقة سحب ورفع الملفات - مغطاة بالكامل للهواتف */
+.status-dot.online { background: #22c55e; }
+.status-dot.offline { background: #ef4444; }
+
 .drop-zone {
-    position: relative;
     border: 2px dashed #3f3f46;
     border-radius: 16px;
     padding: 30px 20px;
-    margin-top: 15px;
-    background: rgba(255, 255, 255, 0.02);
-    overflow: hidden;
-}
-
-.drop-zone:hover, .drop-zone.dragover {
-    border-color: #ffffff;
-    background: rgba(255, 255, 255, 0.06);
-}
-
-.upload-icon { font-size: 2rem; margin-bottom: 8px; }
-.file-limits { font-size: 0.75rem; color: #71717a; margin-top: 6px; }
-
-.btn-select-file {
-    margin-top: 15px;
-    background: #ffffff;
-    color: #000000;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    pointer-events: none;
-}
-
-/* العنصر الجوهري للتفاعل المباشر في هواتف Android/iOS */
-.file-input {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-    z-index: 10;
-}
-
-.quick-text-box {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 15px;
-}
-
-.quick-text-box input {
-    flex: 1;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #27272a;
+    text-align: center;
     background: #121214;
-    color: #fff;
+    transition: all 0.2s ease;
 }
 
-.quick-text-box button {
-    background: #ffffff;
-    color: #000;
-    border: none;
-    padding: 0 16px;
+.drop-zone.drag-active {
+    border-color: #ffffff;
+    background: #18181b;
+}
+
+.drop-zone p {
+    color: #71717a;
+    margin-bottom: 14px;
+    font-size: 0.9rem;
+}
+
+.file-list-container {
+    margin-top: 24px;
+    text-align: start;
+}
+
+.file-list-container h3 {
+    font-size: 0.95rem;
+    color: #a1a1aa;
+    margin-bottom: 12px;
+}
+
+.file-list {
+    max-height: 200px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.empty-msg {
+    font-size: 0.85rem;
+    color: #52525b;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.file-item {
+    background: #18181b;
+    border: 1px solid #27272a;
     border-radius: 10px;
-    font-weight: 600;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.progress-box { margin-top: 15px; }
-progress { width: 100%; height: 8px; border-radius: 4px; }
-.btn-cancel {
-    margin-top: 8px;
-    background: transparent;
-    border: 1px solid #ff4757;
-    color: #ff4757;
-    padding: 6px 12px;
-    border-radius: 6px;
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-name {
+    display: block;
+    font-size: 0.9rem;
+    color: #ffffff;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-size {
+    color: #71717a;
+    font-size: 0.75rem;
+}
+
+.btn-download {
+    text-decoration: none;
+    background: #27272a;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.btn-download:hover {
+    background: #3f3f46;
+}
+
+.back-btn {
+    text-decoration: none;
+    font-weight: 600;
 }
