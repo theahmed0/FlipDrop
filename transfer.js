@@ -1,10 +1,11 @@
 // ==========================================
-// 1. ترجمة الصفحة
+// 1. قاموس ترجمة صفحة غرفة النقل (AR / EN)
 // ==========================================
 const roomTranslations = {
     ar: {
         roomTitle: "غرفة النقل المباشر ⚡",
         labelRoomCode: "رمز الغرفة:",
+        qrHint: "امسح الرمز بواسطة كاميرا الهاتف للانضمام فوراً 📱",
         statusWaiting: "في انتظار انضمام الجهاز الآخر...",
         statusConnected: "متصل جاهز لنقل الملفات 🟢",
         statusDisconnected: "انقطع الاتصال 🔴",
@@ -23,6 +24,7 @@ const roomTranslations = {
     en: {
         roomTitle: "Direct Transfer Room ⚡",
         labelRoomCode: "Room Code:",
+        qrHint: "Scan code with phone camera to join instantly 📱",
         statusWaiting: "Waiting for peer to join...",
         statusConnected: "Connected & ready to transfer 🟢",
         statusDisconnected: "Disconnected 🔴",
@@ -59,6 +61,7 @@ function applyRoomLanguage(lang) {
 
     setElemText('room-title', t.roomTitle);
     setElemText('label-room-code', t.labelRoomCode);
+    setElemText('qr-hint', t.qrHint);
     setElemText('drop-text', t.dropText);
     setElemText('btn-select-file', t.selectFileBtn);
     setElemText('transfers-title', t.transfersTitle);
@@ -88,7 +91,27 @@ function updateStatusUI(statusKey) {
 }
 
 // ==========================================
-// 2. إدارة PeerJS (P2P)
+// 2. توليد رمز QR Code
+// ==========================================
+function renderQRCode(code) {
+    const qrContainer = document.getElementById('qrcode');
+    if (!qrContainer) return;
+
+    qrContainer.innerHTML = '';
+    const joinUrl = `${window.location.origin}${window.location.pathname}?action=join&code=${code}`;
+
+    new QRCode(qrContainer, {
+        text: joinUrl,
+        width: 110,
+        height: 110,
+        colorDark: "#ffffff",
+        colorLight: "#121214",
+        correctLevel: QRCode.CorrectLevel.H
+    });
+}
+
+// ==========================================
+// 3. إدارة الاتصال عبر PeerJS (P2P)
 // ==========================================
 let peer = null;
 let conn = null;
@@ -108,6 +131,10 @@ function initPeerSession() {
         const displayCodeEl = document.getElementById('display-room-code');
         if (displayCodeEl) displayCodeEl.textContent = roomCode;
         
+        // إخفاء الـ QR عند الانضمام من جهاز ثاني
+        const qrWrapper = document.getElementById('qrcode-wrapper');
+        if (qrWrapper) qrWrapper.style.display = 'none';
+
         peer = new Peer();
         
         peer.on('open', () => {
@@ -120,6 +147,8 @@ function initPeerSession() {
         roomCode = generateCode();
         const displayCodeEl = document.getElementById('display-room-code');
         if (displayCodeEl) displayCodeEl.textContent = roomCode;
+
+        renderQRCode(roomCode);
 
         peer = new Peer(`flipdrop-room-${roomCode}`);
 
@@ -162,11 +191,11 @@ function setupConnectionEvents() {
 }
 
 // ==========================================
-// 3. إرسال وتنزيل الملفات
+// 4. إرسال وتنزيل الملفات
 // ==========================================
 function sendFile(file) {
     if (!conn || !conn.open) {
-        alert(currentLang === 'ar' ? 'يجب انتخار الجهاز الآخر حتى يتصل أولاً!' : 'Please wait for the other device to connect!');
+        alert(currentLang === 'ar' ? 'انتظر اتصال الجهاز الآخر بالغرفة أولاً!' : 'Please wait for the other device to connect!');
         return;
     }
 
@@ -223,13 +252,13 @@ function addFileToList(name, size, type, downloadUrl = null) {
 }
 
 // ==========================================
-// 4. ربط الأحداث المباشرة عند التجميل
+// 5. الأحداث المباشرة عند تحميل الصفحة
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
     applyRoomLanguage(currentLang);
     initPeerSession();
 
-    // 1. زر اللغة
+    // 1. تغيير اللغة
     const langBtn = document.getElementById('lang-btn');
     if (langBtn) {
         langBtn.addEventListener('click', (e) => {
@@ -239,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. زر النسخ
+    // 2. نسخ الرمز
     const copyBtn = document.getElementById('copy-btn');
     if (copyBtn) {
         copyBtn.addEventListener('click', () => {
@@ -249,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. رفع ملف عبر الاختيار
+    // 3. رفع ملف عبر زر الاختيار
     const fileInput = document.getElementById('file-input');
     if (fileInput) {
         fileInput.addEventListener('change', (e) => {
@@ -259,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. رفع ملف عبر السحب والإسقاط (Drag & Drop)
+    // 4. رفع ملف عبر السحب والإسقاط
     const dropZone = document.getElementById('drop-zone');
     if (dropZone) {
         ['dragenter', 'dragover'].forEach(evt => {
