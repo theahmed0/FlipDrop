@@ -1,150 +1,207 @@
-/* تنسيقات صفحة الغرفة transfer.html */
-.room-code-wrapper {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px dashed rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    padding: 12px 16px;
+/* --- تنسيق الصفحة والتمركز --- */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    background-color: #09090b;
+}
+
+/* --- الشريط العلوي --- */
+.top-nav {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    right: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    z-index: 100;
+}
+
+.nav-badge {
+    background: rgba(24, 24, 27, 0.8);
+    border: 1px solid #27272a;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* --- الحاوية والبطاقة الرئيسية (حل التداخل الأساسي) --- */
+.action-section {
+    width: 100%;
+    max-width: 460px;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+.action-card {
+    background: rgba(18, 18, 20, 0.85);
+    border: 1px solid #27272a;
+    border-radius: 24px;
+    padding: 24px;
+    backdrop-filter: blur(16px);
+    
+    /* ترتيب العناصر عمودياً باستقامة ومنع التداخل */
+    display: flex;
+    flex-direction: column;
+    gap: 16px; 
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.action-card h2 {
+    margin: 0;
+    text-align: center;
+    font-size: 1.4rem;
+}
+
+/* --- صندوق رمز الغرفة --- */
+.room-code-wrapper {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed #3f3f46;
+    border-radius: 12px;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .code-box {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .code-box strong {
-    font-size: 1.4rem;
-    letter-spacing: 3px;
-    color: #ffffff;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
 }
 
 .copy-btn {
     background: #27272a;
     border: none;
     color: #fff;
-    padding: 6px 10px;
+    padding: 4px 8px;
     border-radius: 6px;
     cursor: pointer;
-    transition: background 0.2s;
 }
 
-.copy-btn:hover {
-    background: #3f3f46;
-}
-
+/* --- حالة الاتصال --- */
 .status-box {
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #a1a1aa;
-    margin-bottom: 24px;
 }
 
 .status-dot {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: #eab308; /* انتظار */
+    background: #eab308;
 }
 
 .status-dot.online { background: #22c55e; }
 .status-dot.offline { background: #ef4444; }
 
+/* --- منطقة السحب والإسقاط والزر --- */
 .drop-zone {
-    border: 2px dashed #3f3f46;
-    border-radius: 16px;
-    padding: 30px 20px;
+    border: 2px dashed #27272a;
+    border-radius: 14px;
+    padding: 20px;
     text-align: center;
-    background: #121214;
-    transition: all 0.2s ease;
-}
-
-.drop-zone.drag-active {
-    border-color: #ffffff;
-    background: #18181b;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 .drop-zone p {
+    margin: 0;
+    font-size: 0.85rem;
     color: #71717a;
-    margin-bottom: 14px;
-    font-size: 0.9rem;
 }
 
+.btn-primary {
+    background: #ffffff;
+    color: #000000;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-block;
+}
+
+/* --- قائمة الملفات المنقولة --- */
 .file-list-container {
-    margin-top: 24px;
-    text-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .file-list-container h3 {
-    font-size: 0.95rem;
+    margin: 0;
+    font-size: 0.85rem;
     color: #a1a1aa;
-    margin-bottom: 12px;
 }
 
 .file-list {
-    max-height: 200px;
+    max-height: 140px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .empty-msg {
-    font-size: 0.85rem;
+    margin: 0;
+    font-size: 0.8rem;
     color: #52525b;
     text-align: center;
-    padding: 10px 0;
 }
 
-.file-item {
-    background: #18181b;
-    border: 1px solid #27272a;
-    border-radius: 10px;
-    padding: 10px 14px;
+/* --- الفوتر السفي داخل البطاقة --- */
+.features-footer {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-}
-
-.file-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.file-name {
-    display: block;
-    font-size: 0.9rem;
-    color: #ffffff;
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.file-size {
-    color: #71717a;
+    border-top: 1px solid #27272a;
+    padding-top: 14px;
+    margin-top: 6px;
     font-size: 0.75rem;
+    color: #71717a;
 }
 
-.btn-download {
-    text-decoration: none;
-    background: #27272a;
-    padding: 6px 10px;
-    border-radius: 8px;
-    transition: background 0.2s;
+/* --- خلفية الفيديو --- */
+#bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -2;
 }
 
-.btn-download:hover {
-    background: #3f3f46;
-}
-
-.back-btn {
-    text-decoration: none;
-    font-weight: 600;
+.video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: -1;
 }
