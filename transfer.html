@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlipDrop ⚡ - Room</title>
     <link rel="stylesheet" href="transfer.css">
+    
+    <!-- مكتبة PeerJS -->
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    
+    <!-- مكتبة توليد الـ QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 
-    <!-- الشريط العلوي -->
     <header class="top-nav">
         <a href="index.html" class="nav-badge back-btn" id="back-btn">
             ← <span id="back-text">الرئيسية</span>
@@ -20,13 +24,11 @@
         </button>
     </header>
 
-    <!-- خلفية الفيديو -->
     <video autoplay muted loop playsinline id="bg-video">
         <source src="background.mp4" type="video/mp4">
     </video>
     <div class="video-overlay" id="video-overlay"></div>
 
-    <!-- البطاقة الرئيسية -->
     <main class="action-section">
         <div class="action-card transfer-card">
             
@@ -38,6 +40,12 @@
                     <strong id="display-room-code">------</strong>
                     <button type="button" class="copy-btn" id="copy-btn" title="نسخ الرمز">📋</button>
                 </div>
+            </div>
+
+            <!-- حاوية عرض الـ QR Code -->
+            <div class="qrcode-wrapper" id="qrcode-wrapper">
+                <div id="qrcode"></div>
+                <small id="qr-hint">امسح الرمز للكاميرا للانضمام فوراً 📱</small>
             </div>
 
             <!-- حالة الاتصال -->
@@ -53,7 +61,7 @@
                 <input type="file" id="file-input" hidden>
             </div>
 
-            <!-- قائمة الملفات المنقولة -->
+            <!-- قائمة الملفات -->
             <div class="file-list-container">
                 <h3 id="transfers-title">الملفات المنقولة:</h3>
                 <div class="file-list" id="file-list">
@@ -61,7 +69,6 @@
                 </div>
             </div>
 
-            <!-- الذيل السفلي -->
             <footer class="features-footer">
                 <span>🔒 Encrypted P2P</span>
                 <span>⚡ Direct Stream</span>
