@@ -1,71 +1,18 @@
-/* --- تنسيق الصفحة والتمركز --- */
-body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
+/* --- عناصر صفحة transfer.html والتنسيق المانع للتداخل --- */
+.action-card.transfer-card {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: system-ui, -apple-system, sans-serif;
-    color: #ffffff;
-    background-color: #09090b;
-}
-
-/* --- الشريط العلوي --- */
-.top-nav {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
-}
-
-.nav-badge {
-    background: rgba(24, 24, 27, 0.8);
-    border: 1px solid #27272a;
-    color: #fff;
-    padding: 8px 16px;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 0.9rem;
-}
-
-/* --- الحاوية والبطاقة الرئيسية (حل التداخل الأساسي) --- */
-.action-section {
+    gap: 16px;
     width: 100%;
-    max-width: 460px;
-    padding: 20px;
-    box-sizing: border-box;
-    z-index: 10;
-}
-
-.action-card {
-    background: rgba(18, 18, 20, 0.85);
+    max-width: 440px;
+    margin: 60px auto 20px auto;
+    background: rgba(18, 18, 20, 0.9);
     border: 1px solid #27272a;
-    border-radius: 24px;
+    border-radius: 20px;
     padding: 24px;
     backdrop-filter: blur(16px);
-    
-    /* ترتيب العناصر عمودياً باستقامة ومنع التداخل */
-    display: flex;
-    flex-direction: column;
-    gap: 16px; 
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
-.action-card h2 {
-    margin: 0;
-    text-align: center;
-    font-size: 1.4rem;
-}
-
-/* --- صندوق رمز الغرفة --- */
 .room-code-wrapper {
     background: rgba(255, 255, 255, 0.03);
     border: 1px dashed #3f3f46;
@@ -85,18 +32,45 @@ body {
 .code-box strong {
     font-size: 1.2rem;
     letter-spacing: 2px;
+    color: #fff;
 }
 
 .copy-btn {
     background: #27272a;
     border: none;
     color: #fff;
-    padding: 4px 8px;
+    padding: 6px 10px;
     border-radius: 6px;
     cursor: pointer;
 }
 
-/* --- حالة الاتصال --- */
+.qrcode-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #27272a;
+}
+
+#qrcode {
+    padding: 6px;
+    background: #121214;
+    border-radius: 8px;
+}
+
+#qrcode img {
+    display: block;
+    margin: 0 auto;
+}
+
+#qr-hint {
+    font-size: 0.75rem;
+    color: #a1a1aa;
+}
+
 .status-box {
     display: flex;
     align-items: center;
@@ -116,9 +90,8 @@ body {
 .status-dot.online { background: #22c55e; }
 .status-dot.offline { background: #ef4444; }
 
-/* --- منطقة السحب والإسقاط والزر --- */
 .drop-zone {
-    border: 2px dashed #27272a;
+    border: 2px dashed #3f3f46;
     border-radius: 14px;
     padding: 20px;
     text-align: center;
@@ -129,34 +102,15 @@ body {
     gap: 10px;
 }
 
-.drop-zone p {
-    margin: 0;
-    font-size: 0.85rem;
-    color: #71717a;
+.drop-zone.drag-active {
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
 }
 
-.btn-primary {
-    background: #ffffff;
-    color: #000000;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    display: inline-block;
-}
-
-/* --- قائمة الملفات المنقولة --- */
 .file-list-container {
     display: flex;
     flex-direction: column;
     gap: 8px;
-}
-
-.file-list-container h3 {
-    margin: 0;
-    font-size: 0.85rem;
-    color: #a1a1aa;
 }
 
 .file-list {
@@ -167,41 +121,40 @@ body {
     gap: 8px;
 }
 
-.empty-msg {
-    margin: 0;
-    font-size: 0.8rem;
-    color: #52525b;
-    text-align: center;
-}
-
-/* --- الفوتر السفي داخل البطاقة --- */
-.features-footer {
+.file-item {
+    background: #18181b;
+    border: 1px solid #27272a;
+    border-radius: 10px;
+    padding: 10px 14px;
     display: flex;
     justify-content: space-between;
-    border-top: 1px solid #27272a;
-    padding-top: 14px;
-    margin-top: 6px;
-    font-size: 0.75rem;
+    align-items: center;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-name {
+    display: block;
+    font-size: 0.85rem;
+    color: #ffffff;
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-size {
     color: #71717a;
+    font-size: 0.75rem;
 }
 
-/* --- خلفية الفيديو --- */
-#bg-video {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    z-index: -2;
-}
-
-.video-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.75);
-    z-index: -1;
+.btn-download {
+    text-decoration: none;
+    background: #27272a;
+    padding: 6px 10px;
+    border-radius: 8px;
 }
