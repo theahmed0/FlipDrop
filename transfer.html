@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlipDrop ⚡ - Room</title>
-    <link rel="stylesheet" href="transfer.css">
+    <title>FlipDrop ⚡ - Transfer Room</title>
+    <link rel="stylesheet" href="home.css">
     
-    <!-- مكتبة PeerJS -->
+    <!-- مكتبة PeerJS للاتصال المباشر -->
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
     
     <!-- مكتبة توليد الـ QR Code -->
@@ -14,6 +14,7 @@
 </head>
 <body>
 
+    <!-- الشريط العلوي -->
     <header class="top-nav">
         <a href="index.html" class="nav-badge back-btn" id="back-btn">
             ← <span id="back-text">الرئيسية</span>
@@ -24,11 +25,13 @@
         </button>
     </header>
 
+    <!-- خلفية الفيديو -->
     <video autoplay muted loop playsinline id="bg-video">
         <source src="background.mp4" type="video/mp4">
     </video>
     <div class="video-overlay" id="video-overlay"></div>
 
+    <!-- بطاقة الغرفة الرئيسية -->
     <main class="action-section">
         <div class="action-card transfer-card">
             
@@ -45,7 +48,7 @@
             <!-- حاوية عرض الـ QR Code -->
             <div class="qrcode-wrapper" id="qrcode-wrapper">
                 <div id="qrcode"></div>
-                <small id="qr-hint">امسح الرمز للكاميرا للانضمام فوراً 📱</small>
+                <small id="qr-hint">امسح الرمز بواسطة كاميرا الهاتف للانضمام فوراً 📱</small>
             </div>
 
             <!-- حالة الاتصال -->
@@ -61,7 +64,7 @@
                 <input type="file" id="file-input" hidden>
             </div>
 
-            <!-- قائمة الملفات -->
+            <!-- قائمة الملفات المنقولة -->
             <div class="file-list-container">
                 <h3 id="transfers-title">الملفات المنقولة:</h3>
                 <div class="file-list" id="file-list">
