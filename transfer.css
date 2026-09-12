@@ -1,4 +1,8 @@
-/* --- تنسيق الصفحة والتمركز --- */
+/* ==========================================
+   تنسيقات الصفحة الرئيسية والبطاقة (FlipDrop)
+   ========================================== */
+
+/* 1. إعدادات الصفحة العامة */
 body {
     margin: 0;
     padding: 0;
@@ -7,12 +11,13 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color: #ffffff;
     background-color: #09090b;
+    overflow-x: hidden;
 }
 
-/* --- الشريط العلوي --- */
+/* 2. الشريط العلوي */
 .top-nav {
     position: fixed;
     top: 20px;
@@ -25,47 +30,64 @@ body {
 }
 
 .nav-badge {
-    background: rgba(24, 24, 27, 0.8);
+    background: rgba(24, 24, 27, 0.85);
     border: 1px solid #27272a;
-    color: #fff;
+    color: #ffffff;
     padding: 8px 16px;
     border-radius: 20px;
     backdrop-filter: blur(10px);
     cursor: pointer;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s;
 }
 
-/* --- الحاوية والبطاقة الرئيسية (حل التداخل الأساسي) --- */
+.nav-badge:hover {
+    background: rgba(39, 39, 42, 0.9);
+}
+
+/* 3. الحاوية والبطاقة الرئيسية (حل التداخل المباشر) */
 .action-section {
     width: 100%;
-    max-width: 460px;
-    padding: 20px;
+    max-width: 440px;
+    padding: 80px 16px 20px 16px; /* مسافة علوية تجنباً للشريط العلوي */
     box-sizing: border-box;
     z-index: 10;
 }
 
 .action-card {
-    background: rgba(18, 18, 20, 0.85);
+    background: rgba(18, 18, 20, 0.92);
     border: 1px solid #27272a;
-    border-radius: 24px;
+    border-radius: 20px;
     padding: 24px;
     backdrop-filter: blur(16px);
     
-    /* ترتيب العناصر عمودياً باستقامة ومنع التداخل */
-    display: flex;
-    flex-direction: column;
-    gap: 16px; 
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    /* إلغاء الارتفاع الثابت والاعتماد على التدفق العمودي */
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important; 
+    height: auto !important;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* إلغاء تموضع العناصر المطلق داخل البطاقة */
+.action-card * {
+    position: static;
+    box-sizing: border-box;
 }
 
 .action-card h2 {
     margin: 0;
     text-align: center;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
+    font-weight: 700;
 }
 
-/* --- صندوق رمز الغرفة --- */
+/* 4. مربع رمز الغرفة */
 .room-code-wrapper {
     background: rgba(255, 255, 255, 0.03);
     border: 1px dashed #3f3f46;
@@ -83,20 +105,63 @@ body {
 }
 
 .code-box strong {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     letter-spacing: 2px;
+    color: #ffffff;
 }
 
 .copy-btn {
     background: #27272a;
     border: none;
-    color: #fff;
-    padding: 4px 8px;
+    color: #ffffff;
+    padding: 6px 10px;
     border-radius: 6px;
     cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s;
 }
 
-/* --- حالة الاتصال --- */
+.copy-btn:hover {
+    background: #3f3f46;
+}
+
+/* 5. حاوية QR Code */
+.qrcode-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid #27272a;
+    width: 100%;
+}
+
+#qrcode {
+    padding: 8px;
+    background: #121214;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#qrcode img, #qrcode canvas {
+    display: block;
+    max-width: 120px;
+    height: auto;
+}
+
+#qr-hint {
+    font-size: 0.75rem;
+    color: #a1a1aa;
+    text-align: center;
+    margin: 0;
+}
+
+/* 6. حالة الاتصال */
 .status-box {
     display: flex;
     align-items: center;
@@ -111,28 +176,35 @@ body {
     height: 8px;
     border-radius: 50%;
     background: #eab308;
+    display: inline-block;
 }
 
 .status-dot.online { background: #22c55e; }
 .status-dot.offline { background: #ef4444; }
 
-/* --- منطقة السحب والإسقاط والزر --- */
+/* 7. منطقة رفع الملفات */
 .drop-zone {
-    border: 2px dashed #27272a;
+    border: 2px dashed #3f3f46;
     border-radius: 14px;
-    padding: 20px;
+    padding: 20px 16px;
     text-align: center;
     background: rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.drop-zone.drag-active {
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .drop-zone p {
     margin: 0;
     font-size: 0.85rem;
-    color: #71717a;
+    color: #a1a1aa;
 }
 
 .btn-primary {
@@ -141,12 +213,19 @@ body {
     padding: 10px 20px;
     border-radius: 10px;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     cursor: pointer;
     display: inline-block;
+    text-decoration: none;
+    border: none;
+    transition: opacity 0.2s;
 }
 
-/* --- قائمة الملفات المنقولة --- */
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+/* 8. قائمة الملفات */
 .file-list-container {
     display: flex;
     flex-direction: column;
@@ -157,6 +236,7 @@ body {
     margin: 0;
     font-size: 0.85rem;
     color: #a1a1aa;
+    font-weight: 500;
 }
 
 .file-list {
@@ -167,25 +247,65 @@ body {
     gap: 8px;
 }
 
+.file-item {
+    background: #18181b;
+    border: 1px solid #27272a;
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-name {
+    display: block;
+    font-size: 0.85rem;
+    color: #ffffff;
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-size {
+    color: #71717a;
+    font-size: 0.75rem;
+}
+
+.btn-download {
+    text-decoration: none;
+    background: #27272a;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+}
+
 .empty-msg {
     margin: 0;
     font-size: 0.8rem;
     color: #52525b;
     text-align: center;
+    padding: 10px 0;
 }
 
-/* --- الفوتر السفي داخل البطاقة --- */
+/* 9. الفوتر السفي داخل البطاقة */
 .features-footer {
     display: flex;
     justify-content: space-between;
     border-top: 1px solid #27272a;
     padding-top: 14px;
-    margin-top: 6px;
+    margin-top: 4px;
     font-size: 0.75rem;
     color: #71717a;
 }
 
-/* --- خلفية الفيديو --- */
+/* 10. خلفية الفيديو */
 #bg-video {
     position: fixed;
     top: 0;
