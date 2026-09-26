@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlipDrop ⚡ - Fast & Private File Transfer</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <!-- الشريط العلوي لشريط الزوار وزر تغيير اللغة -->
+    <header class="top-nav">
+        <div class="nav-badge visitor-badge">
+            <span id="visitor-label">👁️ الزوار:</span>
+            <strong id="visitor-count">1</strong>
+        </div>
+
+        <button type="button" class="nav-badge lang-badge" id="lang-btn">
+            🌐 <span id="lang-text">English</span>
+        </button>
+    </header>
+
+    <!-- خلفية الفيديو والطبقة المظلمة -->
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="background.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay" id="video-overlay"></div>
+
+    <!-- 1. الجزء الأعلى (Hero Section) -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="logo-title">FlipDrop ⚡</h1>
+            <p class="hero-subtitle" id="hero-subtitle">انقل ملفاتك بين أي جهازين فوراً. بدون حسابات. بدون كابلات.</p>
+
+            <div class="scroll-indicator">
+                <span id="scroll-text">مرر للأسفل للبدء</span>
+                <div class="arrow-down">↓</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. قسم إنشاء أو الانضمام للغرفة -->
+    <main class="action-section" id="action-section">
+        <div class="action-card">
+            <h2 id="card-title">ابدأ جلسة النقل 🚀</h2>
+            <p class="card-desc" id="card-desc">اختر إنشاء غرفة جديدة أو أدخل الرمز للانضمام لغرفة قائمة.</p>
+
+            <div class="actions">
+                <button class="btn btn-primary" id="btn-create" onclick="startNewTransfer()">⚡ إنشاء غرفة نقل جديدة</button>
+                
+                <div class="divider"><span id="or-text">أو</span></div>
+
+                <div class="join-box">
+                    <input type="text" id="join-code-input" placeholder="أدخل رمز الغرفة (مثال: 7K9X2P)" maxlength="6">
+                    <button class="btn btn-secondary" id="btn-join" onclick="joinRoomByCode()">انضمام للغرفة</button>
+                </div>
+            </div>
+
+            <footer class="features-footer">
+                <span>🔒 Private by Design</span>
+                <span>⚡ 100MB Max</span>
+                <span>📱 ↔ 💻 P2P Direct</span>
+            </footer>
+        </div>
+    </main>
+
+    <script src="home.js"></script>
+</body>
+</html>
